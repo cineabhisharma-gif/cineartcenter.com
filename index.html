@@ -1233,38 +1233,9 @@ footer {
 }
 .footer-bottom-links a:hover { color: var(--gold-dim); }
 
-/* ══════════════════════════════════
-   IMAGE 1 — PROJECTOR HERO ARTWORK
-   full-bleed behind hero content
-════════════════════════════════════ */
-.hero-projector {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-}
-.hero-projector svg {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0.52;
-}
-/* ensure existing hero elements are above projector */
-.hero-bg    { z-index: 2; }
-.aperture   { z-index: 3; }
-.hero::after { z-index: 4; }
-.hero-content       { z-index: 10; }
-.scroll-indicator   { z-index: 10; }
-/* deep vignette so text stays readable */
-.hero-vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  background: radial-gradient(ellipse 90% 90% at 50% 50%,
-    rgba(5,4,7,.44) 0%,
-    rgba(5,4,7,.78) 80%,
-    rgba(5,4,7,.92) 100%);
-  pointer-events: none;
-}
+/* hero-content and scroll sit above apertures naturally */
+.hero-content     { z-index: 10; }
+.scroll-indicator { z-index: 10; }
 
 /* ══════════════════════════════════
    IMAGE 2 — DYNAMIC MANDALA SECTION
@@ -1515,23 +1486,336 @@ footer {
 }
 .sound-note:hover { border-color: var(--gold-dim); color: var(--gold); }
 
-/* Mobile responsive for new sections */
-@media (max-width: 1024px) {
-  .mandala-inner       { grid-template-columns: 1fr; }
-  .mandala-text-col    { padding: 70px 60px; border-right: none; border-bottom: 1px solid rgba(200,169,110,.08); }
-  .lightpaint-inner    { grid-template-columns: 1fr; }
-  .lightpaint-text     { padding: 60px; }
-  .sound-section       { padding-left: 60px; padding-right: 60px; }
-  .sound-inner         { grid-template-columns: 1fr; gap: 48px; }
+/* ═══════════════════════════════════════════════
+   COMPREHENSIVE MOBILE-FIRST RESPONSIVE SYSTEM
+   Breakpoints: 480 · 640 · 768 · 1024 · 1200
+═══════════════════════════════════════════════ */
+
+/* ── Hamburger menu button (hidden on desktop) ── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 600;
+  background: none;
+  border: none;
 }
-@media (max-width: 768px) {
-  .mandala-text-col    { padding: 60px 24px; }
-  .lightpaint-text     { padding: 48px 24px; }
-  .sound-section       { padding-left: 24px; padding-right: 24px; }
+.nav-hamburger span {
+  display: block;
+  width: 24px; height: 1.5px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4.5px, 4.5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4.5px, -4.5px); }
+
+/* Mobile nav drawer */
+.nav-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 80px; left: 0; right: 0;
+  background: rgba(5,4,7,0.98);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(200,169,110,0.15);
+  padding: 32px 28px 40px;
+  z-index: 490;
+  flex-direction: column;
+  gap: 0;
+  transform: translateY(-12px);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav-mobile-drawer.open {
+  display: flex;
+  transform: translateY(0);
+  opacity: 1;
+}
+.nav-mobile-drawer a {
+  font-family: var(--font-sans);
+  font-size: 11px; font-weight: 300;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--ash); text-decoration: none;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(200,169,110,0.07);
+  transition: color 0.3s;
+}
+.nav-mobile-drawer a:hover { color: var(--gold); }
+.nav-mobile-drawer .mobile-apply {
+  margin-top: 24px;
+  border: 1px solid rgba(200,169,110,0.4);
+  color: var(--gold);
+  padding: 14px 0;
+  text-align: center;
+  border-bottom: 1px solid rgba(200,169,110,0.4);
 }
 
-/* ══════════════════════════════════
-   REVEAL ANIMATIONS ══════════════════════════════════ */
+/* ── 1200px and below ── */
+@media (max-width:1200px) {
+  .hero { padding: 0 80px; }
+  nav  { padding: 0 40px; }
+  .manifesto, .disciplines, .experience,
+  .programs, .cinematic-quote, .faculty,
+  .testimonials, .admissions, footer,
+  .sound-section { padding-left: 60px; padding-right: 60px; }
+  .manifesto-inner { gap: 60px; }
+}
+
+/* ── 1024px tablet landscape ── */
+@media (max-width:1024px) {
+  /* Nav */
+  .nav-links, .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* Hero */
+  .hero { padding: 0 60px; }
+  .hero-title { font-size: clamp(48px,7vw,86px); }
+
+  /* Manifesto */
+  .manifesto { padding: 100px 60px; }
+  .manifesto-inner { grid-template-columns: 1fr; gap: 40px; }
+  .manifesto-label { writing-mode: horizontal-tb; transform: none; }
+  .manifesto-pillars { grid-template-columns: 1fr 1fr; }
+
+  /* Mandala */
+  .mandala-inner { grid-template-columns: 1fr; }
+  .mandala-text-col { padding: 70px 60px; border-right: none; border-bottom: 1px solid rgba(200,169,110,.08); }
+  .mandala-art-col  { min-height: 480px; }
+
+  /* Light painting */
+  .lightpaint-inner { grid-template-columns: 1fr; }
+  .lightpaint-text  { padding: 60px; }
+
+  /* Disciplines */
+  .disciplines { padding: 100px 60px; }
+  .disciplines-grid { grid-template-columns: 1fr 1fr; }
+  .discipline-featured { grid-column: span 2; }
+
+  /* Experience */
+  .experience { padding: 80px 60px; }
+  .experience-inner { grid-template-columns: 1fr; gap: 60px; }
+
+  /* Sound */
+  .sound-section { padding: 80px 60px; }
+  .sound-inner   { grid-template-columns: 1fr; gap: 48px; }
+
+  /* Programs */
+  .programs { padding: 100px 60px; }
+  .programs-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Cinematic quote */
+  .cinematic-quote { padding: 100px 60px; }
+
+  /* Faculty */
+  .faculty { padding: 100px 60px; }
+  .faculty-grid { grid-template-columns: repeat(2,1fr); }
+
+  /* Testimonials */
+  .testimonials { padding: 80px 60px; }
+  .testimonials-track { flex-direction: column; }
+  .testimonial { flex: none; }
+
+  /* Admissions */
+  .admissions { padding: 100px 60px; }
+
+  /* Footer */
+  footer { padding: 60px 60px 32px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 48px; }
+}
+
+/* ── 768px tablet portrait ── */
+@media (max-width:768px) {
+  /* Filmstrips hidden — too narrow */
+  .filmstrip { display: none; }
+
+  /* Nav — spans full width when filmstrips gone */
+  nav { left: 0; right: 0; padding: 0 24px; }
+
+  /* Hero */
+  .hero { padding: 110px 24px 80px; min-height: 100svh; }
+  .hero-title { font-size: clamp(42px,10vw,72px); line-height: 0.95; }
+  .hero-tagline { font-size: 15px; }
+  .hero-actions { flex-direction: column; align-items: center; gap: 14px; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+  .aperture:nth-child(3),
+  .aperture:nth-child(4) { display: none; }
+
+  /* Manifesto */
+  .manifesto { padding: 80px 24px; }
+  .manifesto-inner { gap: 32px; }
+  .manifesto-text h2 { font-size: clamp(26px,6vw,38px); }
+  .manifesto-pillars { grid-template-columns: 1fr; gap: 16px; }
+
+  /* Mandala */
+  .mandala-text-col { padding: 60px 24px; }
+  .mandala-art-col  { min-height: 360px; }
+  #mandala-svg { max-width: 100%; }
+
+  /* Light painting */
+  .lightpaint-inner { grid-template-columns: 1fr; }
+  .lightpaint-art { min-height: 280px; }
+  .lightpaint-art svg { min-height: 280px; }
+  .lightpaint-text { padding: 48px 24px; }
+  .lightpaint-text .section-title { font-size: clamp(28px,7vw,42px); }
+
+  /* Disciplines */
+  .disciplines { padding: 80px 24px; }
+  .disciplines-grid { grid-template-columns: 1fr; }
+  .discipline-featured { grid-column: auto; padding: 40px 28px; }
+  .discipline { padding: 36px 28px; }
+  .discipline-featured h3 { font-size: 26px; }
+
+  /* Experience / Stats */
+  .experience { padding: 80px 24px; }
+  .experience-numbers { grid-template-columns: 1fr 1fr; gap: 24px 32px; }
+  .experience-numbers .stat-num { font-size: 48px; }
+
+  /* Sound */
+  .sound-section { padding: 80px 24px; }
+  .sound-section::before { display: none; }
+  .sound-inner { gap: 40px; }
+  .waveform { height: 80px; gap: 2px; }
+
+  /* Programs */
+  .programs { padding: 80px 24px; }
+  .programs-grid { grid-template-columns: 1fr; }
+
+  /* Cinematic quote */
+  .cinematic-quote { padding: 80px 24px; }
+  .cinematic-quote p { font-size: clamp(18px,5vw,28px); }
+
+  /* Faculty */
+  .faculty { padding: 80px 24px; }
+  .faculty-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  /* Testimonials */
+  .testimonials { padding: 80px 24px; }
+
+  /* Admissions */
+  .admissions { padding: 80px 24px; }
+  .admissions h2 { font-size: clamp(30px,8vw,48px); }
+  .admissions-details { gap: 24px; }
+  .admissions-details .value { font-size: 24px; }
+
+  /* Footer */
+  footer { padding: 60px 24px 28px; }
+  .footer-top { grid-template-columns: 1fr; gap: 40px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+
+/* ── 640px large phone ── */
+@media (max-width:640px) {
+  .hero-title { font-size: clamp(36px,11vw,58px); }
+  .section-title { font-size: clamp(28px,8vw,44px); }
+
+  /* Section header — stack on small screens */
+  .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+
+  /* Disciplines single col with less padding */
+  .discipline { padding: 28px 20px; }
+  .discipline-featured { padding: 32px 24px; }
+  .discipline h3 { font-size: 20px; }
+  .discipline-featured h3 { font-size: 22px; }
+
+  /* Faculty 2 col but tighter */
+  .faculty-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Programs */
+  .program-card { padding: 32px 24px; }
+
+  /* Experience numbers 2 col */
+  .experience-numbers { grid-template-columns: 1fr 1fr; }
+
+  /* Testimonials single */
+  .testimonials-track { grid-template-columns: 1fr !important; }
+
+  /* Sound notes wrap */
+  .sound-notes { gap: 10px; }
+  .sound-note { padding: 8px 12px; font-size: 8px; }
+
+  /* Art tags smaller */
+  .art-tag { padding: 5px 10px; font-size: 7px; }
+
+  /* Admissions buttons stack */
+  .admissions .hero-actions { flex-direction: column; align-items: center; }
+}
+
+/* ── 480px small phone ── */
+@media (max-width:480px) {
+  .hero { padding: 100px 18px 70px; }
+  .hero-title { font-size: clamp(32px,12vw,52px); }
+  .hero-overline { font-size: 7px; letter-spacing: 0.35em; gap: 10px; }
+  .hero-overline::before,
+  .hero-overline::after { width: 28px; }
+  .hero-tagline { font-size: 14px; }
+  .hero-separator-line { width: 40px; }
+
+  /* Nav logo smaller */
+  .nav-logo-main { font-size: 17px; }
+  .nav-logo-sub  { font-size: 7px; letter-spacing: 0.3em; }
+
+  /* Manifesto */
+  .manifesto { padding: 60px 18px; }
+  .manifesto-text h2 { font-size: clamp(22px,7vw,32px); }
+  .manifesto-text p  { font-size: 15px; }
+  .pillar { padding: 20px 16px; }
+  .pillar h3 { font-size: 16px; }
+
+  /* Mandala text */
+  .mandala-text-col { padding: 48px 18px; }
+  .mandala-art-col  { min-height: 300px; }
+
+  /* Light paint */
+  .lightpaint-text { padding: 40px 18px; }
+
+  /* Disciplines */
+  .disciplines { padding: 60px 18px; }
+  .discipline  { padding: 24px 16px; }
+  .discipline-featured { padding: 28px 18px; }
+  .discipline h3 { font-size: 18px; }
+  .discipline-featured h3 { font-size: 20px; }
+  .discipline p  { font-size: 13px; }
+
+  /* Experience */
+  .experience { padding: 60px 18px; }
+  .experience-numbers { grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+  .experience-numbers .stat-num { font-size: 40px; }
+
+  /* Sound */
+  .sound-section { padding: 60px 18px; }
+  .waveform { height: 64px; gap: 2px; }
+
+  /* Programs */
+  .programs { padding: 60px 18px; }
+  .program-card { padding: 28px 18px; }
+
+  /* Faculty */
+  .faculty { padding: 60px 18px; }
+  .faculty-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  /* Testimonials */
+  .testimonials { padding: 60px 18px; }
+  .testimonial  { padding: 28px 20px; }
+  .testimonial-text { font-size: 16px; }
+
+  /* Admissions */
+  .admissions { padding: 60px 18px; }
+
+  /* Footer */
+  footer { padding: 48px 18px 24px; }
+  .footer-brand .logo { font-size: 22px; }
+  .footer-bottom-links { flex-wrap: wrap; gap: 16px; }
+
+  /* Quote block */
+  .quote-block p { font-size: 15px; }
+
+  /* Testimonials track */
+  .testimonials-track { display: flex !important; flex-direction: column; }
+}
+
+/* ── REVEAL ANIMATIONS ── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -1545,35 +1829,6 @@ footer {
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
-
-/* ── MOBILE ── */
-@media (max-width: 1024px) {
-  nav, .manifesto, .disciplines, .experience, .programs, .cinematic-quote, .faculty, .testimonials, .admissions, footer { padding-left: 60px; padding-right: 60px; }
-  .hero { padding: 0 60px; }
-  .manifesto-inner { grid-template-columns: 1fr; gap: 40px; }
-  .manifesto-label { writing-mode: horizontal-tb; transform: none; }
-  .disciplines-grid { grid-template-columns: 1fr 1fr; }
-  .discipline-featured { grid-column: span 2; }
-  .experience-inner { grid-template-columns: 1fr; }
-  .programs-grid { grid-template-columns: 1fr; }
-  .faculty-grid { grid-template-columns: repeat(2,1fr); }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 48px; }
-  .testimonials-track { flex-direction: column; }
-  .testimonial { flex: none; }
-}
-@media (max-width: 768px) {
-  nav { padding: 0 20px; left: 0; right: 0; }
-  .filmstrip { display: none; }
-  .hero { padding: 100px 24px 80px; }
-  .manifesto, .disciplines, .experience, .programs, .cinematic-quote, .faculty, .testimonials, .admissions, footer { padding-left: 24px; padding-right: 24px; }
-  .nav-links { display: none; }
-  .disciplines-grid { grid-template-columns: 1fr; }
-  .discipline-featured { grid-column: auto; }
-  .experience-numbers { grid-template-columns: 1fr 1fr; }
-  .faculty-grid { grid-template-columns: repeat(2,1fr); }
-  .footer-top { grid-template-columns: 1fr; gap: 40px; }
-  .admissions-details { gap: 32px; }
-}
 </style>
 </head>
 <body>
@@ -1614,107 +1869,26 @@ footer {
     <li><a href="#admissions">Admissions</a></li>
   </ul>
   <a href="#admissions" class="nav-cta">Apply Now</a>
+  <!-- Hamburger — shown on tablet/mobile only -->
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Navigation Drawer -->
+<div class="nav-mobile-drawer" id="mobile-drawer">
+  <a href="#disciplines" class="drawer-link">Disciplines</a>
+  <a href="#programs"    class="drawer-link">Programs</a>
+  <a href="#faculty"     class="drawer-link">Faculty</a>
+  <a href="#about"       class="drawer-link">About</a>
+  <a href="#admissions"  class="drawer-link">Admissions</a>
+  <a href="#admissions"  class="mobile-apply drawer-link">Apply Now</a>
+</div>
 
 <!-- ═══════════════════════════════
      HERO
 ══════════════════════════════════ -->
 <section class="hero">
-  <!-- ① PROJECTOR ARTWORK — Image 1 -->
-  <div class="hero-projector" aria-hidden="true">
-    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="hb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#C8A96E" stop-opacity=".75"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></linearGradient>
-        <linearGradient id="hfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1C1726"/><stop offset="100%" stop-color="#0A0810"/></linearGradient>
-        <linearGradient id="hpb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A2438"/><stop offset="100%" stop-color="#0A0810"/></linearGradient>
-        <radialGradient id="lensGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E2C48A" stop-opacity=".6"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></radialGradient>
-      </defs>
-      <rect width="1200" height="700" fill="#050407"/>
-      <!-- wide beam fans -->
-      <polygon points="220,310 220,390 1100,560 1100,200" fill="url(#hb1)" opacity=".14"/>
-      <polygon points="220,330 220,370 1000,500 1000,250" fill="url(#hb1)" opacity=".09"/>
-      <polygon points="220,340 220,360 900,460 900,295" fill="url(#hb1)" opacity=".06"/>
-      <!-- central beam rays -->
-      <line x1="220" y1="350" x2="1120" y2="100" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".13"/>
-      <line x1="220" y1="350" x2="1120" y2="200" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".17"/>
-      <line x1="220" y1="350" x2="1120" y2="300" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".22"/>
-      <line x1="220" y1="350" x2="1120" y2="350" stroke="#C8A96E" stroke-width="1.2" stroke-opacity=".28"/>
-      <line x1="220" y1="350" x2="1120" y2="400" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".22"/>
-      <line x1="220" y1="350" x2="1120" y2="500" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".17"/>
-      <line x1="220" y1="350" x2="1120" y2="580" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".1"/>
-      <!-- lens glow -->
-      <circle cx="220" cy="350" r="28" fill="url(#lensGlow)" opacity=".7"/>
-      <circle cx="220" cy="350" r="6" fill="#E2C48A" opacity=".9"/>
-      <circle cx="220" cy="350" r="14" fill="none" stroke="#C8A96E" stroke-width=".7" opacity=".5"/>
-      <circle cx="220" cy="350" r="24" fill="none" stroke="#C8A96E" stroke-width=".4" opacity=".3"/>
-      <!-- distant film frame -->
-      <rect x="820" y="150" width="340" height="400" rx="3" fill="url(#hfg)" stroke="#C8A96E" stroke-width="1.2"/>
-      <rect x="830" y="160" width="320" height="380" rx="2" fill="#0D0A14"/>
-      <!-- scan lines inside frame -->
-      <line x1="830" y1="214" x2="1150" y2="214" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
-      <line x1="830" y1="268" x2="1150" y2="268" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
-      <line x1="830" y1="322" x2="1150" y2="322" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
-      <line x1="830" y1="376" x2="1150" y2="376" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
-      <line x1="830" y1="430" x2="1150" y2="430" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
-      <line x1="936" y1="160" x2="936" y2="540" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".15"/>
-      <line x1="1043" y1="160" x2="1043" y2="540" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".15"/>
-      <!-- aperture circle in frame -->
-      <circle cx="990" cy="350" r="88" fill="none" stroke="#C8A96E" stroke-width=".6" opacity=".3"/>
-      <circle cx="990" cy="350" r="54" fill="none" stroke="#C8A96E" stroke-width=".6" opacity=".4"/>
-      <circle cx="990" cy="350" r="20" fill="#110E18" stroke="#C8A96E" stroke-width=".8" opacity=".7"/>
-      <circle cx="990" cy="350" r="7"  fill="#C8A96E" opacity=".85"/>
-      <!-- sprocket holes left -->
-      <rect x="820" y="158" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="182" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="206" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="230" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="254" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="278" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="302" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="326" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="350" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="374" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="398" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="422" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="446" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="470" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="494" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="820" y="518" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <!-- sprocket right -->
-      <rect x="1152" y="158" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="182" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="206" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="230" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="254" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="278" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="302" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="326" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="350" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="374" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="398" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="422" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <rect x="1152" y="446" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
-      <!-- projector body -->
-      <rect x="110" y="290" width="115" height="120" rx="6" fill="url(#hpb)" stroke="#3A3050" stroke-width="1"/>
-      <rect x="118" y="298" width="99" height="104" rx="4" fill="#0A0810"/>
-      <circle cx="168" cy="350" r="38" fill="#0D0A14" stroke="#2A2438" stroke-width="2"/>
-      <circle cx="168" cy="350" r="26" fill="#110E18" stroke="#C8A96E" stroke-width=".6" opacity=".6"/>
-      <circle cx="168" cy="350" r="10" fill="#C8A96E" opacity=".95"/>
-      <circle cx="168" cy="350" r="5"  fill="#E2C48A"/>
-      <rect x="148" y="410" width="40" height="6" rx="3" fill="#2A2438"/>
-      <rect x="156" y="416" width="24" height="40" rx="1" fill="#1C1726" stroke="#2A2438" stroke-width=".7"/>
-      <rect x="85" y="305" width="26" height="90" rx="3" fill="#1C1726" stroke="#2A2438" stroke-width=".7"/>
-      <!-- floating dust motes -->
-      <circle cx="380" cy="290" r="2"   fill="#C8A96E" opacity=".35"/>
-      <circle cx="520" cy="260" r="1.5" fill="#C8A96E" opacity=".25"/>
-      <circle cx="640" cy="300" r="1.5" fill="#C8A96E" opacity=".2"/>
-      <circle cx="700" cy="270" r="2"   fill="#C8A96E" opacity=".3"/>
-      <circle cx="760" cy="310" r="1"   fill="#C8A96E" opacity=".18"/>
-      <circle cx="430" cy="400" r="1.5" fill="#C8A96E" opacity=".22"/>
-      <circle cx="580" cy="380" r="1"   fill="#C8A96E" opacity=".2"/>
-    </svg>
-  </div>
-  <div class="hero-vignette"></div>
   <div class="hero-bg"></div>
   <div class="aperture"></div>
   <div class="aperture"></div>
@@ -2485,40 +2659,77 @@ footer {
 
 <!-- SCRIPTS -->
 <script>
-// Custom cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
+// ── Custom cursor (desktop only) ──
+const cursor     = document.getElementById('cursor');
+const ring       = document.getElementById('cursor-ring');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
 document.addEventListener('mousemove', e => {
   mouseX = e.clientX; mouseY = e.clientY;
   cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
+  cursor.style.top  = mouseY + 'px';
 });
 function animateRing() {
   ringX += (mouseX - ringX) * 0.12;
   ringY += (mouseY - ringY) * 0.12;
   ring.style.left = ringX + 'px';
-  ring.style.top = ringY + 'px';
+  ring.style.top  = ringY + 'px';
   requestAnimationFrame(animateRing);
 }
 animateRing();
 
-// Nav scroll
+// Hide custom cursor on touch devices
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  cursor.style.display = 'none';
+  ring.style.display   = 'none';
+  document.body.style.cursor = 'auto';
+}
+
+// ── Nav scroll ──
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ── Hamburger menu ──
+const hamburger    = document.getElementById('hamburger');
+const mobileDrawer = document.getElementById('mobile-drawer');
+
+hamburger.addEventListener('click', e => {
+  e.stopPropagation();
+  const isOpen = mobileDrawer.classList.toggle('open');
+  hamburger.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 
-// Reveal on scroll
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
+// Close drawer when any link inside is tapped
+document.querySelectorAll('.drawer-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileDrawer.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-reveals.forEach(el => observer.observe(el));
+});
+
+// Close drawer on tap outside
+document.addEventListener('click', e => {
+  if (mobileDrawer.classList.contains('open') &&
+      !nav.contains(e.target) &&
+      !mobileDrawer.contains(e.target)) {
+    mobileDrawer.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+
+// ── Scroll-reveal ──
+const reveals  = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => revealObs.observe(el));
 </script>
 </body>
 </html>
