@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cine Art Center — The Academy of Cinematic Arts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Josefin+Sans:wght@100;200;300;400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   CINEARTCENTER.COM — PREMIUM CINEMATIC WEBSITE
+   Design Direction: Neo-Classicist Cinema Palace
+   Dark velvet + aged gold + grain + drama
+   ============================================= */
+
+:root {
+  --void:      #050407;
+  --deep:      #0A0810;
+  --chamber:   #110E18;
+  --dusk:      #1C1726;
+  --fog:       #2A2438;
+  --gold:      #C8A96E;
+  --gold-bright: #E2C48A;
+  --gold-pale: #F5E8CC;
+  --gold-dim:  #7A6340;
+  --ivory:     #F0EAD8;
+  --ash:       #9A9090;
+  --smoke:     #5A5060;
+  --crimson:   #8B1E2F;
+  --crimson-bright: #B82840;
+  --silver:    #C8C0B8;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-title:   'IM Fell English', Georgia, serif;
+  --font-sans:    'Josefin Sans', sans-serif;
+
+  --grain-opacity: 0.035;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--void);
+  color: var(--ivory);
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.8;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(200,169,110,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
+}
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor { width: 14px; height: 14px; background: var(--gold-bright); }
+body:has(a:hover) .cursor-ring,
+body:has(button:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--gold); }
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+  z-index: 9990;
+  animation: grain 0.5s steps(2) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 2%); }
+  30% { transform: translate(-1%, 4%); }
+  40% { transform: translate(4%, -1%); }
+  50% { transform: translate(-3%, 3%); }
+  60% { transform: translate(2%, -2%); }
+  70% { transform: translate(-4%, 1%); }
+  80% { transform: translate(1%, -4%); }
+  90% { transform: translate(3%, 3%); }
+}
+
+/* ── FILM STRIP DECORATION ── */
+.filmstrip {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 28px;
+  background: var(--deep);
+  border-right: 1px solid rgba(200,169,110,0.08);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+.filmstrip-r {
+  right: 0; left: auto;
+  border-right: none;
+  border-left: 1px solid rgba(200,169,110,0.08);
+}
+.sprocket {
+  width: 12px; height: 9px;
+  border: 1px solid rgba(200,169,110,0.25);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed;
+  top: 0; left: 28px; right: 28px;
+  z-index: 500;
+  padding: 0 60px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background var(--transition), border-bottom var(--transition);
+}
+nav.scrolled {
+  background: rgba(5,4,7,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,169,110,0.15);
+}
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo-main {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+}
+.nav-logo-sub {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 200;
+  letter-spacing: 0.4em;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-top: 3px;
+}
+.nav-links {
+  display: flex;
+  gap: 44px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  position: relative;
+  transition: color var(--transition);
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width var(--transition);
+}
+.nav-links a:hover { color: var(--gold-pale); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.4);
+  padding: 10px 22px;
+  text-decoration: none;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.nav-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+  z-index: -1;
+}
+.nav-cta:hover { color: var(--void); }
+.nav-cta:hover::before { transform: scaleX(1); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 120px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 40%, rgba(28,23,38,0.6) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(139,30,47,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 20%, rgba(200,169,110,0.04) 0%, transparent 60%);
+}
+/* Cinematic aperture rings */
+.aperture {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(200,169,110,0.06);
+  transform: translate(-50%, -50%);
+  animation: breathe 8s ease-in-out infinite;
+}
+.aperture:nth-child(1) { width: 300px; height: 300px; top: 50%; left: 50%; animation-delay: 0s; }
+.aperture:nth-child(2) { width: 500px; height: 500px; top: 50%; left: 50%; animation-delay: 1s; }
+.aperture:nth-child(3) { width: 700px; height: 700px; top: 50%; left: 50%; animation-delay: 2s; }
+.aperture:nth-child(4) { width: 900px; height: 900px; top: 50%; left: 50%; animation-delay: 3s; border-color: rgba(200,169,110,0.03); }
+@keyframes breathe {
+  0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%,-50%) scale(1.02); }
+}
+
+/* Horizontal scan lines */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.04) 3px,
+    rgba(0,0,0,0.04) 4px
+  );
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 1000px;
+}
+.hero-overline {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.hero-overline::before,
+.hero-overline::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim));
+}
+.hero-overline::after { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8vw, 110px);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+  margin-bottom: 8px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-bright);
+  display: block;
+}
+.hero-title span {
+  font-weight: 600;
+  display: block;
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-pale);
+}
+.hero-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0;
+}
+.hero-separator-line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-dim)); }
+.hero-separator-line:last-child { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+.hero-separator-diamond {
+  width: 6px; height: 6px;
+  border: 1px solid var(--gold);
+  transform: rotate(45deg);
+}
+.hero-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ash);
+  letter-spacing: 0.04em;
+  max-width: 560px;
+  margin: 0 auto 52px;
+  line-height: 1.7;
+}
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--void);
+  background: var(--gold);
+  padding: 16px 44px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+  display: inline-block;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gold-bright);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition);
+  z-index: -1;
+}
+.btn-primary:hover { letter-spacing: 0.45em; }
+.btn-secondary {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.35);
+  padding: 16px 44px;
+  text-decoration: none;
+  transition: all var(--transition);
+  display: inline-block;
+}
+.btn-secondary:hover {
+  border-color: var(--gold);
+  letter-spacing: 0.45em;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+.scroll-indicator span {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--smoke), transparent);
+  animation: scrollAnim 2s ease-in-out infinite;
+}
+@keyframes scrollAnim {
+  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ── MANIFESTO SECTION ── */
+.manifesto {
+  padding: 140px 120px;
+  position: relative;
+  background: var(--deep);
+}
+.manifesto::before {
+  content: '"';
+  position: absolute;
+  top: 60px;
+  left: 80px;
+  font-family: var(--font-display);
+  font-size: 280px;
+  color: rgba(200,169,110,0.04);
+  line-height: 1;
+  pointer-events: none;
+  font-weight: 600;
+}
+.manifesto-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 100px;
+  align-items: start;
+}
+.manifesto-label {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  padding-top: 8px;
+}
+.manifesto-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--ivory);
+  margin-bottom: 32px;
+}
+.manifesto-text h2 em { font-style: italic; color: var(--gold-bright); }
+.manifesto-text p {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--ash);
+  line-height: 1.9;
+  margin-bottom: 20px;
+}
+.manifesto-text p strong { color: var(--ivory); font-weight: 400; }
+.manifesto-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--gold-dim);
+  margin: 40px 0;
+}
+.manifesto-pillars {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.pillar {
+  padding: 28px 24px;
+  border: 1px solid rgba(200,169,110,0.1);
+  border-top: 2px solid var(--gold-dim);
+  transition: border-color var(--transition), transform var(--transition);
+}
+.pillar:hover {
+  border-color: rgba(200,169,110,0.35);
+  transform: translateY(-4px);
+}
+.pillar-num {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 300;
+  color: rgba(200,169,110,0.2);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.pillar h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gold-pale);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.pillar p {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--smoke);
+  line-height: 1.7;
+}
+
+/* ── DISCIPLINES ── */
+.disciplines {
+  padding: 140px 120px;
+  background: var(--void);
+  position: relative;
+  overflow: hidden;
+}
+.disciplines::before {
+  content: 'ART';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 300px;
+  font-weight: 700;
+  color: rgba(200,169,110,0.02);
+  letter-spacing: -10px;
+  line-height: 1;
+  pointer-events: none;
+}
+.section-header {
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+}
+.section-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--gold-dim);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 58px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.15;
+}
+.section-title em { font-style: italic; color: var(--gold-bright); }
+.section-link {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: color var(--transition), gap var(--transition);
+}
+.section-link::after { content: '→'; transition: transform var(--transition); }
+.section-link:hover { color: var(--gold); gap: 18px; }
+
+.disciplines-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 2px;
+}
+.discipline {
+  position: relative;
+  padding: 48px 40px;
+  background: var(--chamber);
+  overflow: hidden;
+  cursor: none;
+  transition: background var(--transition);
+  group: true;
+}
+.discipline:hover { background: var(--dusk); }
+.discipline::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.discipline:hover::before { transform: scaleX(1); }
+.discipline-featured {
+  grid-column: span 2;
+  padding: 64px 56px;
+}
+.discipline-num {
+  font-family: var(--font-display);
+  font-size: 68px;
+  font-weight: 300;
+  color: rgba(200,169,110,0.08);
+  line-height: 1;
+  position: absolute;
+  top: 24px; right: 28px;
+  transition: color var(--transition);
+}
+.discipline:hover .discipline-num { color: rgba(200,169,110,0.15); }
+.discipline-icon {
+  font-size: 28px;
+  margin-bottom: 20px;
+  display: block;
+}
+.discipline h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--gold-pale);
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+.discipline-featured h3 { font-size: 36px; }
+.discipline p {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--smoke);
+  line-height: 1.8;
+  max-width: 320px;
+}
+.discipline-featured p { font-size: 16px; max-width: 480px; }
+.discipline-arts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.discipline-art {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border: 1px solid rgba(200,169,110,0.2);
+  padding: 5px 12px;
+}
+
+/* ── EXPERIENCE / STATS ── */
+.experience {
+  padding: 120px;
+  background: var(--chamber);
+  position: relative;
+}
+.experience-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+.experience-numbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 60px;
+}
+.stat-item {
+  border-top: 1px solid rgba(200,169,110,0.2);
+  padding-top: 20px;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 300;
+  color: var(--gold-bright);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  display: block;
+  margin-top: 6px;
+}
+.experience-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3vw, 46px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.25;
+  margin-bottom: 24px;
+}
+.experience-text h2 em { font-style: italic; color: var(--gold-bright); }
+.experience-text p {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ash);
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+.quote-block {
+  margin-top: 36px;
+  padding: 24px 28px;
+  border-left: 2px solid var(--gold);
+  background: rgba(200,169,110,0.04);
+}
+.quote-block p {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold-pale);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.quote-block cite {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  font-style: normal;
+}
+
+/* ── PROGRAMS ── */
+.programs {
+  padding: 140px 120px;
+  background: var(--void);
+}
+.programs-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+.program-card {
+  position: relative;
+  padding: 48px 36px;
+  border: 1px solid rgba(200,169,110,0.1);
+  background: var(--deep);
+  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  overflow: hidden;
+}
+.program-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(200,169,110,0.3);
+  background: var(--chamber);
+}
+.program-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,169,110,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.program-card:hover::after { opacity: 1; }
+.program-card.featured {
+  border-color: rgba(200,169,110,0.3);
+  background: var(--dusk);
+}
+.program-card.featured::before {
+  content: 'FLAGSHIP';
+  position: absolute;
+  top: 20px; right: 20px;
+  font-family: var(--font-sans);
+  font-size: 7px;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.3);
+  padding: 4px 10px;
+}
+.program-duration {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 200;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 20px;
+}
+.program-card h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--gold-pale);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.program-card p {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--ash);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.program-modules {
+  list-style: none;
+  margin-bottom: 32px;
+}
+.program-modules li {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--smoke);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.program-modules li::before {
+  content: '';
+  display: block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  flex-shrink: 0;
+}
+.program-link {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: gap var(--transition);
+}
+.program-link::after { content: '→'; }
+.program-link:hover { gap: 18px; }
+
+/* ── CINEMATIC QUOTE ── */
+.cinematic-quote {
+  padding: 160px 120px;
+  background: var(--deep);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cinematic-quote::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(139,30,47,0.06) 0%, transparent 70%);
+}
+.cinematic-quote blockquote {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.cinematic-quote p {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ivory);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+}
+.cinematic-quote p em { color: var(--gold-bright); font-style: normal; }
+.cinematic-quote cite {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  font-style: normal;
+}
+.cinematic-quote cite::before {
+  content: '— ';
+}
+
+/* ── FACULTY ── */
+.faculty {
+  padding: 140px 120px;
+  background: var(--void);
+}
+.faculty-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 2px;
+}
+.faculty-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: var(--chamber);
+  cursor: none;
+}
+.faculty-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) sepia(20%);
+  transition: filter var(--transition), transform 0.6s ease;
+}
+.faculty-portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, var(--dusk) 0%, var(--chamber) 50%, var(--fog) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 80px;
+  font-weight: 300;
+  color: rgba(200,169,110,0.15);
+  letter-spacing: -4px;
+}
+.faculty-card:hover .faculty-portrait { transform: scale(1.05); filter: grayscale(60%) sepia(20%); }
+.faculty-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 40px 24px 28px;
+  background: linear-gradient(to top, rgba(5,4,7,0.95) 0%, rgba(5,4,7,0.6) 60%, transparent 100%);
+  transform: translateY(20px);
+  transition: transform var(--transition);
+}
+.faculty-card:hover .faculty-overlay { transform: translateY(0); }
+.faculty-name {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ivory);
+  display: block;
+  margin-bottom: 4px;
+}
+.faculty-role {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 200;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  display: block;
+}
+
+/* ── TESTIMONIAL ── */
+.testimonials {
+  padding: 120px;
+  background: var(--chamber);
+  overflow: hidden;
+  position: relative;
+}
+.testimonials-track {
+  display: flex;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.testimonial {
+  flex: 0 0 calc(50% - 20px);
+  padding: 40px;
+  border: 1px solid rgba(200,169,110,0.1);
+  background: var(--deep);
+}
+.testimonial-text {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ivory);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.testimonial-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--dusk);
+  border: 1px solid rgba(200,169,110,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--gold-dim);
+  flex-shrink: 0;
+}
+.testimonial-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gold-pale);
+  display: block;
+}
+.testimonial-credit {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--smoke);
+}
+
+/* ── ADMISSIONS CTA ── */
+.admissions {
+  padding: 160px 120px;
+  background: var(--void);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.admissions::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(200,169,110,0.04) 0%, transparent 70%);
+}
+.admissions-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.admissions-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.6em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.admissions-eyebrow::before,
+.admissions-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold-dim);
+}
+.admissions h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.admissions h2 em { font-style: italic; color: var(--gold-bright); }
+.admissions p {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--ash);
+  line-height: 1.8;
+  margin-bottom: 52px;
+}
+.admissions-details {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 52px;
+  flex-wrap: wrap;
+}
+.admissions-detail {
+  text-align: center;
+}
+.admissions-detail .value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--gold);
+  display: block;
+}
+.admissions-detail .label {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--deep);
+  border-top: 1px solid rgba(200,169,110,0.1);
+  padding: 80px 120px 40px;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 80px;
+}
+.footer-brand .logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--gold-bright);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+.footer-brand .academy-line {
+  font-family: var(--font-sans);
+  font-size: 8px;
+  font-weight: 200;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  display: block;
+  margin-bottom: 20px;
+}
+.footer-brand p {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--smoke);
+  line-height: 1.8;
+  max-width: 260px;
+}
+.footer-col h4 {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+.footer-col ul li a {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--smoke);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-col ul li a:hover { color: var(--gold-pale); }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-bottom p {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.3em;
+  color: var(--smoke);
+}
+.footer-bottom-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.footer-bottom-links a {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 200;
+  letter-spacing: 0.3em;
+  color: var(--smoke);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-bottom-links a:hover { color: var(--gold-dim); }
+
+/* ══════════════════════════════════
+   IMAGE 1 — PROJECTOR HERO ARTWORK
+   full-bleed behind hero content
+════════════════════════════════════ */
+.hero-projector {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+.hero-projector svg {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.52;
+}
+/* ensure existing hero elements are above projector */
+.hero-bg    { z-index: 2; }
+.aperture   { z-index: 3; }
+.hero::after { z-index: 4; }
+.hero-content       { z-index: 10; }
+.scroll-indicator   { z-index: 10; }
+/* deep vignette so text stays readable */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(ellipse 90% 90% at 50% 50%,
+    rgba(5,4,7,.44) 0%,
+    rgba(5,4,7,.78) 80%,
+    rgba(5,4,7,.92) 100%);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════
+   IMAGE 2 — DYNAMIC MANDALA SECTION
+   Full split: text left / mandala right
+════════════════════════════════════ */
+.mandala-section {
+  background: var(--void);
+  overflow: hidden;
+}
+.mandala-inner {
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 620px;
+}
+.mandala-text-col {
+  padding: 100px 80px 100px 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid rgba(200,169,110,.08);
+  background: var(--deep);
+}
+.mandala-art-col {
+  position: relative;
+  background: var(--void);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 560px;
+}
+.mandala-art-col::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%,
+    transparent 55%, var(--void) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+#mandala-svg {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+/* Mandala rotation layers */
+.m-ring-1 { animation: mRotate1 40s linear infinite; transform-origin: 340px 240px; }
+.m-ring-2 { animation: mRotate2 60s linear infinite; transform-origin: 340px 240px; }
+.m-ring-3 { animation: mRotate3 80s linear infinite reverse; transform-origin: 340px 240px; }
+.m-pulse  { animation: mPulse 4s ease-in-out infinite; transform-origin: 340px 240px; }
+.m-node   { animation: mNodePulse 3s ease-in-out infinite; }
+.m-node:nth-child(2) { animation-delay: .4s; }
+.m-node:nth-child(3) { animation-delay: .8s; }
+.m-node:nth-child(4) { animation-delay: 1.2s; }
+.m-node:nth-child(5) { animation-delay: 1.6s; }
+.m-node:nth-child(6) { animation-delay: 2.0s; }
+.m-node:nth-child(7) { animation-delay: 2.4s; }
+.m-node:nth-child(8) { animation-delay: 2.8s; }
+.m-spoke  { animation: mSpokeGlow 4s ease-in-out infinite; }
+.m-spoke:nth-child(2) { animation-delay: .5s; }
+.m-spoke:nth-child(3) { animation-delay: 1s; }
+.m-spoke:nth-child(4) { animation-delay: 1.5s; }
+.m-spoke:nth-child(5) { animation-delay: 2s; }
+.m-spoke:nth-child(6) { animation-delay: 2.5s; }
+.m-spoke:nth-child(7) { animation-delay: 3s; }
+.m-spoke:nth-child(8) { animation-delay: 3.5s; }
+@keyframes mRotate1  { to { transform: rotate(360deg); } }
+@keyframes mRotate2  { to { transform: rotate(360deg); } }
+@keyframes mRotate3  { to { transform: rotate(-360deg); } }
+@keyframes mPulse {
+  0%,100% { transform: scale(1); opacity: .9; }
+  50%     { transform: scale(1.04); opacity: 1; }
+}
+@keyframes mNodePulse {
+  0%,100% { opacity: .7; r: 32; }
+  50%     { opacity: 1; r: 34; }
+}
+@keyframes mSpokeGlow {
+  0%,100% { stroke-opacity: .22; }
+  50%     { stroke-opacity: .55; }
+}
+.art-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 36px;
+}
+.art-tag {
+  font-family: var(--font-sans);
+  font-size: 8px; font-weight: 300;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--gold-dim);
+  border: 1px solid rgba(200,169,110,.2);
+  padding: 6px 14px;
+  transition: all .3s;
+}
+.art-tag:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+/* ══════════════════════════════════
+   IMAGE 3 — LIGHT PAINTING SPLIT
+   left = SVG artwork / right = text
+════════════════════════════════════ */
+.lightpaint-section {
+  background: var(--chamber);
+  overflow: hidden;
+}
+.lightpaint-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 520px;
+}
+.lightpaint-art {
+  position: relative;
+  background: var(--deep);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.lightpaint-art svg { width: 100%; min-height: 440px; }
+.lightpaint-art::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    var(--chamber) 0%, transparent 18%,
+    transparent 82%, var(--chamber) 100%);
+  pointer-events: none;
+}
+.lightpaint-text {
+  padding: 80px 80px 80px 60px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* ══════════════════════════════════
+   AUDIO WAVEFORM VISUAL SECTION
+   Between Experience and Programs
+════════════════════════════════════ */
+.sound-section {
+  background: var(--deep);
+  padding: 100px 120px;
+  overflow: hidden;
+  position: relative;
+}
+.sound-section::before {
+  content: 'SOUND';
+  position: absolute;
+  left: -10px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 240px; font-weight: 700;
+  color: rgba(200,169,110,.02);
+  line-height: 1; pointer-events: none;
+}
+.sound-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.sound-text .section-eyebrow { margin-bottom: 16px; }
+.sound-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(28px,3vw,44px);
+  font-weight: 300; color: var(--ivory);
+  line-height: 1.25; margin-bottom: 20px;
+}
+.sound-text h2 em { font-style: italic; color: var(--gold-bright); }
+.sound-text p {
+  font-family: var(--font-display);
+  font-size: 15px; color: var(--ash);
+  line-height: 1.9; margin-bottom: 14px;
+}
+.sound-art {
+  position: relative;
+  display: flex; flex-direction: column; gap: 20px;
+}
+/* Animated waveform bars */
+.waveform {
+  display: flex; align-items: center;
+  gap: 3px; height: 100px;
+}
+.waveform-bar {
+  flex: 1;
+  border-radius: 1px;
+  background: var(--gold);
+  opacity: .35;
+  animation: waveAnim 1.4s ease-in-out infinite;
+  transform-origin: bottom;
+}
+@keyframes waveAnim {
+  0%,100% { transform: scaleY(.18); opacity: .25; }
+  50%     { transform: scaleY(1);   opacity: .75; }
+}
+/* stagger each bar */
+.waveform-bar:nth-child(1){animation-delay:0s;height:100%}
+.waveform-bar:nth-child(2){animation-delay:.07s;height:100%}
+.waveform-bar:nth-child(3){animation-delay:.14s;height:100%}
+.waveform-bar:nth-child(4){animation-delay:.21s;height:100%}
+.waveform-bar:nth-child(5){animation-delay:.28s;height:100%}
+.waveform-bar:nth-child(6){animation-delay:.35s;height:100%}
+.waveform-bar:nth-child(7){animation-delay:.42s;height:100%}
+.waveform-bar:nth-child(8){animation-delay:.49s;height:100%}
+.waveform-bar:nth-child(9){animation-delay:.56s;height:100%}
+.waveform-bar:nth-child(10){animation-delay:.63s;height:100%}
+.waveform-bar:nth-child(11){animation-delay:.7s;height:100%}
+.waveform-bar:nth-child(12){animation-delay:.77s;height:100%}
+.waveform-bar:nth-child(13){animation-delay:.84s;height:100%}
+.waveform-bar:nth-child(14){animation-delay:.91s;height:100%}
+.waveform-bar:nth-child(15){animation-delay:.98s;height:100%}
+.waveform-bar:nth-child(16){animation-delay:1.05s;height:100%}
+.waveform-bar:nth-child(17){animation-delay:1.12s;height:100%}
+.waveform-bar:nth-child(18){animation-delay:1.19s;height:100%}
+.waveform-bar:nth-child(19){animation-delay:1.26s;height:100%}
+.waveform-bar:nth-child(20){animation-delay:1.33s;height:100%}
+.waveform-bar:nth-child(21){animation-delay:0.03s;height:100%}
+.waveform-bar:nth-child(22){animation-delay:0.1s;height:100%}
+.waveform-bar:nth-child(23){animation-delay:0.17s;height:100%}
+.waveform-bar:nth-child(24){animation-delay:0.24s;height:100%}
+.waveform-bar:nth-child(25){animation-delay:0.31s;height:100%}
+.waveform-bar:nth-child(26){animation-delay:0.38s;height:100%}
+.waveform-bar:nth-child(27){animation-delay:0.45s;height:100%}
+.waveform-bar:nth-child(28){animation-delay:0.52s;height:100%}
+.waveform-bar:nth-child(29){animation-delay:0.59s;height:100%}
+.waveform-bar:nth-child(30){animation-delay:0.66s;height:100%}
+.waveform-bar:nth-child(31){animation-delay:0.73s;height:100%}
+.waveform-bar:nth-child(32){animation-delay:0.80s;height:100%}
+.waveform-bar:nth-child(33){animation-delay:0.87s;height:100%}
+.waveform-bar:nth-child(34){animation-delay:0.94s;height:100%}
+.waveform-bar:nth-child(35){animation-delay:1.01s;height:100%}
+.waveform-bar:nth-child(36){animation-delay:1.08s;height:100%}
+.waveform-bar:nth-child(37){animation-delay:1.15s;height:100%}
+.waveform-bar:nth-child(38){animation-delay:1.22s;height:100%}
+.waveform-bar:nth-child(39){animation-delay:1.29s;height:100%}
+.waveform-bar:nth-child(40){animation-delay:1.36s;height:100%}
+.waveform-label {
+  font-family: var(--font-sans);
+  font-size: 9px; letter-spacing: .4em;
+  text-transform: uppercase; color: var(--gold-dim);
+  text-align: center;
+}
+.sound-notes {
+  display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px;
+}
+.sound-note {
+  padding: 10px 18px;
+  border: 1px solid rgba(200,169,110,.15);
+  font-family: var(--font-sans);
+  font-size: 9px; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--smoke);
+  transition: all .3s;
+}
+.sound-note:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+/* Mobile responsive for new sections */
+@media (max-width: 1024px) {
+  .mandala-inner       { grid-template-columns: 1fr; }
+  .mandala-text-col    { padding: 70px 60px; border-right: none; border-bottom: 1px solid rgba(200,169,110,.08); }
+  .lightpaint-inner    { grid-template-columns: 1fr; }
+  .lightpaint-text     { padding: 60px; }
+  .sound-section       { padding-left: 60px; padding-right: 60px; }
+  .sound-inner         { grid-template-columns: 1fr; gap: 48px; }
+}
+@media (max-width: 768px) {
+  .mandala-text-col    { padding: 60px 24px; }
+  .lightpaint-text     { padding: 48px 24px; }
+  .sound-section       { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ══════════════════════════════════
+   REVEAL ANIMATIONS ══════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── MOBILE ── */
+@media (max-width: 1024px) {
+  nav, .manifesto, .disciplines, .experience, .programs, .cinematic-quote, .faculty, .testimonials, .admissions, footer { padding-left: 60px; padding-right: 60px; }
+  .hero { padding: 0 60px; }
+  .manifesto-inner { grid-template-columns: 1fr; gap: 40px; }
+  .manifesto-label { writing-mode: horizontal-tb; transform: none; }
+  .disciplines-grid { grid-template-columns: 1fr 1fr; }
+  .discipline-featured { grid-column: span 2; }
+  .experience-inner { grid-template-columns: 1fr; }
+  .programs-grid { grid-template-columns: 1fr; }
+  .faculty-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .testimonials-track { flex-direction: column; }
+  .testimonial { flex: none; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 20px; left: 0; right: 0; }
+  .filmstrip { display: none; }
+  .hero { padding: 100px 24px 80px; }
+  .manifesto, .disciplines, .experience, .programs, .cinematic-quote, .faculty, .testimonials, .admissions, footer { padding-left: 24px; padding-right: 24px; }
+  .nav-links { display: none; }
+  .disciplines-grid { grid-template-columns: 1fr; }
+  .discipline-featured { grid-column: auto; }
+  .experience-numbers { grid-template-columns: 1fr 1fr; }
+  .faculty-grid { grid-template-columns: repeat(2,1fr); }
+  .footer-top { grid-template-columns: 1fr; gap: 40px; }
+  .admissions-details { gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- FILM STRIPS -->
+<div class="filmstrip" aria-hidden="true">
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+</div>
+<div class="filmstrip filmstrip-r" aria-hidden="true">
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-main">Cine<span style="letter-spacing:0.22em;margin-left:0.08em;color:var(--gold-bright)"> Art</span> <span style="color:var(--ash);font-weight:300">Center</span></span>
+    <span class="nav-logo-sub">Academy of Cinematic Arts</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#disciplines">Disciplines</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#faculty">Faculty</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+  </ul>
+  <a href="#admissions" class="nav-cta">Apply Now</a>
+</nav>
+
+<!-- ═══════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero">
+  <!-- ① PROJECTOR ARTWORK — Image 1 -->
+  <div class="hero-projector" aria-hidden="true">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hb1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#C8A96E" stop-opacity=".75"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></linearGradient>
+        <linearGradient id="hfg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1C1726"/><stop offset="100%" stop-color="#0A0810"/></linearGradient>
+        <linearGradient id="hpb" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A2438"/><stop offset="100%" stop-color="#0A0810"/></linearGradient>
+        <radialGradient id="lensGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E2C48A" stop-opacity=".6"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="1200" height="700" fill="#050407"/>
+      <!-- wide beam fans -->
+      <polygon points="220,310 220,390 1100,560 1100,200" fill="url(#hb1)" opacity=".14"/>
+      <polygon points="220,330 220,370 1000,500 1000,250" fill="url(#hb1)" opacity=".09"/>
+      <polygon points="220,340 220,360 900,460 900,295" fill="url(#hb1)" opacity=".06"/>
+      <!-- central beam rays -->
+      <line x1="220" y1="350" x2="1120" y2="100" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".13"/>
+      <line x1="220" y1="350" x2="1120" y2="200" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".17"/>
+      <line x1="220" y1="350" x2="1120" y2="300" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".22"/>
+      <line x1="220" y1="350" x2="1120" y2="350" stroke="#C8A96E" stroke-width="1.2" stroke-opacity=".28"/>
+      <line x1="220" y1="350" x2="1120" y2="400" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".22"/>
+      <line x1="220" y1="350" x2="1120" y2="500" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".17"/>
+      <line x1="220" y1="350" x2="1120" y2="580" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".1"/>
+      <!-- lens glow -->
+      <circle cx="220" cy="350" r="28" fill="url(#lensGlow)" opacity=".7"/>
+      <circle cx="220" cy="350" r="6" fill="#E2C48A" opacity=".9"/>
+      <circle cx="220" cy="350" r="14" fill="none" stroke="#C8A96E" stroke-width=".7" opacity=".5"/>
+      <circle cx="220" cy="350" r="24" fill="none" stroke="#C8A96E" stroke-width=".4" opacity=".3"/>
+      <!-- distant film frame -->
+      <rect x="820" y="150" width="340" height="400" rx="3" fill="url(#hfg)" stroke="#C8A96E" stroke-width="1.2"/>
+      <rect x="830" y="160" width="320" height="380" rx="2" fill="#0D0A14"/>
+      <!-- scan lines inside frame -->
+      <line x1="830" y1="214" x2="1150" y2="214" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
+      <line x1="830" y1="268" x2="1150" y2="268" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
+      <line x1="830" y1="322" x2="1150" y2="322" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
+      <line x1="830" y1="376" x2="1150" y2="376" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
+      <line x1="830" y1="430" x2="1150" y2="430" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".2"/>
+      <line x1="936" y1="160" x2="936" y2="540" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".15"/>
+      <line x1="1043" y1="160" x2="1043" y2="540" stroke="#C8A96E" stroke-width=".25" stroke-opacity=".15"/>
+      <!-- aperture circle in frame -->
+      <circle cx="990" cy="350" r="88" fill="none" stroke="#C8A96E" stroke-width=".6" opacity=".3"/>
+      <circle cx="990" cy="350" r="54" fill="none" stroke="#C8A96E" stroke-width=".6" opacity=".4"/>
+      <circle cx="990" cy="350" r="20" fill="#110E18" stroke="#C8A96E" stroke-width=".8" opacity=".7"/>
+      <circle cx="990" cy="350" r="7"  fill="#C8A96E" opacity=".85"/>
+      <!-- sprocket holes left -->
+      <rect x="820" y="158" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="182" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="206" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="230" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="254" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="278" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="302" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="326" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="350" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="374" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="398" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="422" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="446" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="470" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="494" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="820" y="518" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <!-- sprocket right -->
+      <rect x="1152" y="158" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="182" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="206" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="230" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="254" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="278" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="302" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="326" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="350" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="374" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="398" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="422" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <rect x="1152" y="446" width="8" height="16" rx="2" fill="#C8A96E" opacity=".45"/>
+      <!-- projector body -->
+      <rect x="110" y="290" width="115" height="120" rx="6" fill="url(#hpb)" stroke="#3A3050" stroke-width="1"/>
+      <rect x="118" y="298" width="99" height="104" rx="4" fill="#0A0810"/>
+      <circle cx="168" cy="350" r="38" fill="#0D0A14" stroke="#2A2438" stroke-width="2"/>
+      <circle cx="168" cy="350" r="26" fill="#110E18" stroke="#C8A96E" stroke-width=".6" opacity=".6"/>
+      <circle cx="168" cy="350" r="10" fill="#C8A96E" opacity=".95"/>
+      <circle cx="168" cy="350" r="5"  fill="#E2C48A"/>
+      <rect x="148" y="410" width="40" height="6" rx="3" fill="#2A2438"/>
+      <rect x="156" y="416" width="24" height="40" rx="1" fill="#1C1726" stroke="#2A2438" stroke-width=".7"/>
+      <rect x="85" y="305" width="26" height="90" rx="3" fill="#1C1726" stroke="#2A2438" stroke-width=".7"/>
+      <!-- floating dust motes -->
+      <circle cx="380" cy="290" r="2"   fill="#C8A96E" opacity=".35"/>
+      <circle cx="520" cy="260" r="1.5" fill="#C8A96E" opacity=".25"/>
+      <circle cx="640" cy="300" r="1.5" fill="#C8A96E" opacity=".2"/>
+      <circle cx="700" cy="270" r="2"   fill="#C8A96E" opacity=".3"/>
+      <circle cx="760" cy="310" r="1"   fill="#C8A96E" opacity=".18"/>
+      <circle cx="430" cy="400" r="1.5" fill="#C8A96E" opacity=".22"/>
+      <circle cx="580" cy="380" r="1"   fill="#C8A96E" opacity=".2"/>
+    </svg>
+  </div>
+  <div class="hero-vignette"></div>
+  <div class="hero-bg"></div>
+  <div class="aperture"></div>
+  <div class="aperture"></div>
+  <div class="aperture"></div>
+  <div class="aperture"></div>
+
+  <div class="hero-content">
+    <div class="hero-overline">Est. 2024 &nbsp;·&nbsp; cineartcenter.com &nbsp;·&nbsp; Academy of Cinematic Arts</div>
+
+    <h1 class="hero-title">
+      <em>Where Every Art</em>
+      <span>Becomes Cinema</span>
+    </h1>
+
+    <div class="hero-separator">
+      <div class="hero-separator-line"></div>
+      <div class="hero-separator-diamond"></div>
+      <div class="hero-separator-line"></div>
+    </div>
+
+    <p class="hero-tagline">
+      An academy devoted to preserving the sacred language of cinema — where painting, music, literature, theatre, architecture, and dance converge into a single moving frame.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#programs" class="btn-primary">Explore Programs</a>
+      <a href="#about" class="btn-secondary">Our Manifesto</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     MANIFESTO
+══════════════════════════════════ -->
+<section class="manifesto" id="about">
+  <div class="manifesto-inner">
+    <div class="manifesto-label">Our Manifesto</div>
+    <div class="manifesto-text">
+      <h2>Cinema is not an industry.<br>Cinema is the <em>art of all arts.</em></h2>
+      <div class="manifesto-divider"></div>
+      <p>In an age of algorithms and artificial shortcuts, <strong>CineArt Center Academy</strong> stands as a sanctuary — a place where the cinematic tradition is not merely taught, but fiercely preserved. We believe that every great film is simultaneously a painting, a symphony, a poem, a dream, and a mirror held up to the human condition.</p>
+      <p>Our academy was founded on a singular conviction: that the filmmaker who understands <strong>light as a painter</strong>, <strong>silence as a composer</strong>, <strong>space as an architect</strong>, and <strong>movement as a choreographer</strong> — that filmmaker creates cinema that endures across generations.</p>
+      <p>We do not manufacture technicians. We cultivate artists who happen to hold a camera.</p>
+
+      <div class="manifesto-pillars">
+        <div class="pillar reveal">
+          <div class="pillar-num">I</div>
+          <h3>Preserve</h3>
+          <p>Honour the masters. Study Tarkovsky's light, Bergman's silence, Kubrick's geometry, Satyajit Ray's humanity.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-1">
+          <div class="pillar-num">II</div>
+          <h3>Integrate</h3>
+          <p>Cinema breathes through all art forms. Train in music, painting, architecture, and movement to film truthfully.</p>
+        </div>
+        <div class="pillar reveal reveal-delay-2">
+          <div class="pillar-num">III</div>
+          <h3>Illuminate</h3>
+          <p>A frame is never neutral. Every shot is a statement, an emotion, a moral position. Make every frame matter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     THE SEVEN ARTS — Dynamic Mandala
+══════════════════════════════════ -->
+<section class="mandala-section">
+  <div class="mandala-inner">
+
+    <!-- Text column -->
+    <div class="mandala-text-col">
+      <div class="section-eyebrow reveal">The Philosophy</div>
+      <h2 class="section-title reveal" style="margin-bottom:20px;">Cinema Absorbs<br><em>Everything</em></h2>
+      <p class="reveal" style="font-family:var(--font-display);font-size:16px;color:var(--ash);line-height:1.9;margin-bottom:16px;">The ancient Greeks named six arts: painting, sculpture, architecture, music, poetry, and dance. Cinema arrived as the seventh — and unlike the others, it absorbs them all simultaneously within a single frame.</p>
+      <p class="reveal" style="font-family:var(--font-display);font-size:14px;color:var(--smoke);line-height:1.9;margin-bottom:8px;">At Cine Art Center, we teach cinema as the synthesis it truly is. A student of ours studies Vermeer's light before they touch a camera. They study Stravinsky before they score a scene.</p>
+      <div class="art-tags reveal">
+        <span class="art-tag">Painting</span>
+        <span class="art-tag">Music</span>
+        <span class="art-tag">Literature</span>
+        <span class="art-tag">Architecture</span>
+        <span class="art-tag">Dance</span>
+        <span class="art-tag">Theatre</span>
+        <span class="art-tag">Sculpture</span>
+        <span class="art-tag">Poetry</span>
+      </div>
+      <a href="#programs" class="btn-secondary reveal" style="display:inline-block;width:fit-content;">View All Programs</a>
+    </div>
+
+    <!-- ② DYNAMIC MANDALA ARTWORK -->
+    <div class="mandala-art-col">
+      <svg id="mandala-svg" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" aria-label="Seven Arts converging into Cinema">
+        <defs>
+          <radialGradient id="mg1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#C8A96E" stop-opacity=".18"/>
+            <stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="mg2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8B1E2F" stop-opacity=".08"/>
+            <stop offset="100%" stop-color="#8B1E2F" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="mglow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <rect width="680" height="480" fill="#050407"/>
+        <!-- ambient glow -->
+        <circle cx="340" cy="240" r="220" fill="url(#mg1)"/>
+        <circle cx="340" cy="240" r="130" fill="url(#mg2)"/>
+
+        <!-- ── ROTATING OUTER RING of dashes ── -->
+        <circle class="m-ring-1" cx="340" cy="240" r="198"
+          fill="none" stroke="#C8A96E" stroke-width=".6"
+          stroke-opacity=".15" stroke-dasharray="6 9"/>
+
+        <!-- ── ROTATING MIDDLE RING ── -->
+        <circle class="m-ring-2" cx="340" cy="240" r="158"
+          fill="none" stroke="#C8A96E" stroke-width=".5"
+          stroke-opacity=".18" stroke-dasharray="3 12"/>
+
+        <!-- ── COUNTER-ROTATING INNER RING ── -->
+        <circle class="m-ring-3" cx="340" cy="240" r="118"
+          fill="none" stroke="#C8A96E" stroke-width="1"
+          stroke-opacity=".2" stroke-dasharray="2 8"/>
+
+        <!-- ── STATIC RINGS ── -->
+        <circle cx="340" cy="240" r="76"  fill="none" stroke="#C8A96E" stroke-width=".8" stroke-opacity=".22"/>
+        <circle cx="340" cy="240" r="44"  fill="#0A0810" stroke="#C8A96E" stroke-width="1"/>
+
+        <!-- ── ANIMATED SPOKES (8 arts) ── -->
+        <g class="m-ring-3"><!-- slow counter-rotate spokes for depth -->
+          <line class="m-spoke" x1="340" y1="196" x2="340" y2="84"  stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="340" y1="284" x2="340" y2="396" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="296" y1="216" x2="202" y2="162" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="384" y1="216" x2="478" y2="162" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="296" y1="264" x2="202" y2="318" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="384" y1="264" x2="478" y2="318" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="300" y1="240" x2="172" y2="240" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+          <line class="m-spoke" x1="380" y1="240" x2="510" y2="240" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".22"/>
+        </g>
+
+        <!-- ── CINEMA CENTRE ── -->
+        <circle class="m-pulse" cx="340" cy="240" r="42" fill="#110E18" stroke="#C8A96E" stroke-width="1"/>
+        <circle cx="340" cy="240" r="30" fill="none" stroke="#C8A96E" stroke-width=".5" stroke-opacity=".5"/>
+        <rect x="322" y="222" width="36" height="36" rx="2" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".6"/>
+        <line x1="322" y1="238" x2="358" y2="238" stroke="#C8A96E" stroke-width=".4" opacity=".4"/>
+        <line x1="340" y1="222" x2="340" y2="258" stroke="#C8A96E" stroke-width=".4" opacity=".4"/>
+        <circle cx="340" cy="240" r="5" fill="#C8A96E" opacity=".9" filter="url(#mglow)"/>
+        <text x="340" y="276" font-family="Georgia,serif" font-size="9" fill="#C8A96E" letter-spacing="4" text-anchor="middle" opacity=".9">CINEMA</text>
+
+        <!-- ── ART NODES (8 orbiting arts) — static positions, nodes pulse ── -->
+        <!-- PAINTING top -->
+        <g class="m-node">
+          <circle cx="340" cy="52" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <path d="M-14,-10 Q-10,-18 -4,-16 Q0,-20 4,-16 Q10,-18 14,-10 Q14,2 0,12 Q-14,2 -14,-10 Z" fill="none" stroke="#C8A96E" stroke-width=".9" opacity=".85" transform="translate(340,52)"/>
+          <ellipse cx="340" cy="47" rx="6" ry="8" fill="none" stroke="#C8A96E" stroke-width=".5" opacity=".5"/>
+          <text x="340" y="76" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">PAINTING</text>
+        </g>
+
+        <!-- LITERATURE bottom -->
+        <g class="m-node">
+          <circle cx="340" cy="428" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <line x1="324" y1="422" x2="356" y2="422" stroke="#C8A96E" stroke-width=".7" opacity=".75"/>
+          <line x1="324" y1="414" x2="356" y2="414" stroke="#C8A96E" stroke-width=".5" opacity=".5"/>
+          <line x1="324" y1="406" x2="356" y2="406" stroke="#C8A96E" stroke-width=".5" opacity=".5"/>
+          <path d="M334,428 L334,434 M346,428 L346,434" stroke="#C8A96E" stroke-width=".6" opacity=".6"/>
+          <text x="340" y="452" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">LITERATURE</text>
+        </g>
+
+        <!-- MUSIC top-left -->
+        <g class="m-node">
+          <circle cx="190" cy="148" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <path d="M180,160 L180,136 L184,136 L184,160 M188,160 L188,142 L192,142 L192,160 M196,160 L196,132 L200,132 L200,160" fill="#C8A96E" opacity=".75"/>
+          <line x1="176" y1="162" x2="204" y2="162" stroke="#C8A96E" stroke-width=".8" opacity=".6"/>
+          <text x="190" y="174" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">MUSIC</text>
+        </g>
+
+        <!-- ARCHITECTURE top-right -->
+        <g class="m-node">
+          <circle cx="490" cy="148" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <rect x="476" y="132" width="28" height="28" rx="1" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".85"/>
+          <line x1="476" y1="142" x2="504" y2="142" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <line x1="476" y1="152" x2="504" y2="152" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <line x1="486" y1="132" x2="486" y2="160" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <line x1="496" y1="132" x2="496" y2="160" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <rect x="488" y="160" width="4" height="6" fill="#C8A96E" opacity=".6"/>
+          <text x="490" y="174" font-family="Georgia,serif" font-size="7.5" fill="#C8A96E" letter-spacing="1" text-anchor="middle" opacity=".85">ARCHITECTURE</text>
+        </g>
+
+        <!-- THEATRE left -->
+        <g class="m-node">
+          <circle cx="148" cy="240" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <ellipse cx="148" cy="234" rx="10" ry="11" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".85"/>
+          <path d="M138,246 Q143,240 148,242 Q153,240 158,246" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".75"/>
+          <line x1="142" y1="224" x2="142" y2="228" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <line x1="154" y1="224" x2="154" y2="228" stroke="#C8A96E" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>
+          <text x="148" y="266" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">THEATRE</text>
+        </g>
+
+        <!-- DANCE right -->
+        <g class="m-node">
+          <circle cx="532" cy="240" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <ellipse cx="532" cy="228" rx="8" ry="10" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".85"/>
+          <line x1="532" y1="238" x2="532" y2="252" stroke="#C8A96E" stroke-width=".9" opacity=".75"/>
+          <path d="M524,256 Q528,250 532,252 Q536,250 540,256" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".7"/>
+          <path d="M524,260 L532,256 L540,260" fill="none" stroke="#C8A96E" stroke-width=".7" opacity=".65"/>
+          <text x="532" y="266" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">DANCE</text>
+        </g>
+
+        <!-- SCULPTURE bottom-left -->
+        <g class="m-node">
+          <circle cx="190" cy="332" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <ellipse cx="190" cy="326" rx="10" ry="12" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".85"/>
+          <path d="M180,338 L174,348 M200,338 L206,348" stroke="#C8A96E" stroke-width=".7" opacity=".65"/>
+          <text x="190" y="356" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="1" text-anchor="middle" opacity=".85">SCULPTURE</text>
+        </g>
+
+        <!-- POETRY bottom-right -->
+        <g class="m-node">
+          <circle cx="490" cy="332" r="33" fill="#110E18" stroke="#C8A96E" stroke-width=".8"/>
+          <path d="M476,348 L476,320 L504,320 L504,348 Z" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".85"/>
+          <line x1="476" y1="330" x2="504" y2="330" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <line x1="476" y1="338" x2="504" y2="338" stroke="#C8A96E" stroke-width=".3" opacity=".4"/>
+          <path d="M476,348 Q490,356 504,348" fill="none" stroke="#C8A96E" stroke-width=".8" opacity=".65"/>
+          <text x="490" y="356" font-family="Georgia,serif" font-size="8" fill="#C8A96E" letter-spacing="2" text-anchor="middle" opacity=".85">POETRY</text>
+        </g>
+
+        <text x="340" y="472" font-family="Georgia,serif" font-size="9" fill="#7A6340" letter-spacing="5" text-anchor="middle" font-style="italic">The seventh art — the art of all arts</text>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     PAINTING WITH LIGHT — Image 3
+══════════════════════════════════ -->
+<section class="lightpaint-section">
+  <div class="lightpaint-inner">
+    <!-- SVG art -->
+    <div class="lightpaint-art" aria-hidden="true">
+      <svg viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-height:420px;">
+        <defs>
+          <linearGradient id="lg-hand" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2A1F14"/><stop offset="100%" stop-color="#4A3520"/></linearGradient>
+          <linearGradient id="lg-beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#C8A96E" stop-opacity=".9"/><stop offset="40%" stop-color="#E2C48A" stop-opacity=".6"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></linearGradient>
+          <linearGradient id="lg-scene" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A0810"/><stop offset="60%" stop-color="#110E18"/><stop offset="100%" stop-color="#1C1726"/></linearGradient>
+          <linearGradient id="lg-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2A2438"/><stop offset="100%" stop-color="#1C1726"/></linearGradient>
+          <radialGradient id="brushGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E2C48A" stop-opacity=".7"/><stop offset="100%" stop-color="#C8A96E" stop-opacity="0"/></radialGradient>
+        </defs>
+        <rect width="680" height="400" fill="#050407"/>
+        <!-- the canvas being painted into existence -->
+        <rect x="220" y="60" width="420" height="280" fill="url(#lg-scene)" rx="2"/>
+        <rect x="220" y="60" width="420" height="280" fill="none" stroke="#C8A96E" stroke-width=".9" rx="2"/>
+        <!-- dark landscape inside canvas -->
+        <ellipse cx="420" cy="160" rx="62" ry="58" fill="#0D0A14" opacity=".8"/>
+        <ellipse cx="420" cy="164" rx="44" ry="36" fill="#1C1726" opacity=".4"/>
+        <circle cx="512" cy="112" r="20" fill="#C8A96E" opacity=".12"/>
+        <circle cx="512" cy="112" r="11" fill="#C8A96E" opacity=".1"/>
+        <circle cx="512" cy="112" r="5"  fill="#C8A96E" opacity=".22"/>
+        <line x1="512" y1="112" x2="475" y2="152" stroke="#C8A96E" stroke-width=".4" stroke-opacity=".14"/>
+        <line x1="512" y1="112" x2="490" y2="156" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".1"/>
+        <!-- ground & foliage -->
+        <rect x="220" y="300" width="420" height="40" fill="url(#lg-ground)"/>
+        <path d="M220,300 Q310,290 380,296 Q440,302 510,292 Q560,286 640,295 L640,340 L220,340 Z" fill="#1C1726"/>
+        <path d="M290,300 L290,240 L310,240 L310,300" fill="#2A2438" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".3"/>
+        <rect x="285" y="236" width="30" height="8" rx="1" fill="#1C1726" stroke="#C8A96E" stroke-width=".3" opacity=".5"/>
+        <path d="M350,300 L350,255 L365,255 L365,300" fill="#2A2438" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".3"/>
+        <path d="M560,300 L560,250 L580,250 L580,300" fill="#2A2438" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".2"/>
+        <ellipse cx="300" cy="240" rx="25" ry="19" fill="#1C1726" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".25"/>
+        <ellipse cx="358" cy="255" rx="17" ry="14" fill="#1C1726" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".2"/>
+        <ellipse cx="570" cy="250" rx="23" ry="16" fill="#1C1726" stroke="#C8A96E" stroke-width=".3" stroke-opacity=".2"/>
+        <!-- brush beam from left into the canvas -->
+        <polygon points="215,125 215,275 36,210" fill="url(#lg-beam)" opacity=".16"/>
+        <polygon points="215,140 215,260 68,210" fill="url(#lg-beam)" opacity=".1"/>
+        <line x1="214" y1="200" x2="90" y2="200" stroke="#C8A96E" stroke-width="1.6" stroke-opacity=".22"/>
+        <line x1="214" y1="200" x2="110" y2="188" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".12"/>
+        <line x1="214" y1="200" x2="110" y2="212" stroke="#C8A96E" stroke-width=".6" stroke-opacity=".12"/>
+        <!-- hand holding brush -->
+        <path d="M60,175 Q72,165 80,172 Q88,165 100,170 Q106,175 100,185 L80,200 L60,185 Z" fill="#2A1F14" stroke="#7A6340" stroke-width=".9"/>
+        <path d="M90,158 L86,175 L84,175 L88,158 Z" fill="url(#lg-hand)" stroke="#7A6340" stroke-width=".5"/>
+        <path d="M87,155 Q87,148 89,144 L91,144 Q93,148 93,155 L91,164 L89,164 Z" fill="#3A2A18" stroke="#7A6340" stroke-width=".5"/>
+        <ellipse cx="90" cy="143" rx="3.2" ry="3.6" fill="#C8A96E" opacity=".9"/>
+        <line x1="90" y1="140" x2="90" y2="124" stroke="#8B7040" stroke-width="1.6" stroke-linecap="round"/>
+        <ellipse cx="90" cy="121" rx="5.5" ry="3.2" fill="#C8A96E" opacity=".85"/>
+        <!-- brush tip glow -->
+        <circle cx="87" cy="105" r="10" fill="url(#brushGlow)"/>
+        <line x1="88" y1="118" x2="84" y2="104" stroke="#C8A96E" stroke-width="1.1" stroke-linecap="round" opacity=".9"/>
+        <line x1="91" y1="118" x2="93" y2="104" stroke="#C8A96E" stroke-width=".7" stroke-linecap="round" opacity=".65"/>
+        <circle cx="86" cy="103" r="3.5" fill="#C8A96E" opacity=".85" filter="url(#mglow)"/>
+        <circle cx="86" cy="103" r="8"   fill="none" stroke="#C8A96E" stroke-width=".5" opacity=".45"/>
+        <circle cx="86" cy="103" r="14"  fill="none" stroke="#C8A96E" stroke-width=".3" opacity=".2"/>
+        <!-- canvas border glow -->
+        <rect x="219" y="59" width="422" height="282" rx="3" fill="none" stroke="#C8A96E" stroke-width="4" stroke-opacity=".04"/>
+        <text x="340" y="392" font-family="Georgia,serif" font-size="9" fill="#7A6340" letter-spacing="5" text-anchor="middle" font-style="italic">Cinematography is painting with light</text>
+      </svg>
+    </div>
+
+    <!-- Text right -->
+    <div class="lightpaint-text reveal">
+      <div class="section-eyebrow">Cinematography</div>
+      <h2 class="section-title">Painting<br>with <em>Light</em></h2>
+      <p style="font-family:var(--font-display);font-size:16px;color:var(--ash);line-height:1.9;margin:20px 0 16px;">Every great cinematographer is a painter who chose a different canvas. The camera does not record light — it sculpts it. Before we teach lenses, we teach Vermeer, Caravaggio, and Rembrandt.</p>
+      <p style="font-family:var(--font-display);font-size:14px;color:var(--smoke);line-height:1.9;margin-bottom:28px;">We teach you to see the frame as a composition before you understand the machine. When your eye is trained, the tools become irrelevant. What remains is intention.</p>
+      <div class="quote-block">
+        <p>"The job of the cinematographer is to paint with light, and every painting begins with darkness."</p>
+        <cite>Vilmos Zsigmond, ASC</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     DISCIPLINES
+══════════════════════════════════ -->
+<section class="disciplines" id="disciplines">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">The Seven Arts of Cinema</div>
+      <h2 class="section-title">Cinema Absorbs <em>Everything</em></h2>
+    </div>
+    <a href="#programs" class="section-link">View All Programs</a>
+  </div>
+
+  <div class="disciplines-grid" style="max-width:1100px;margin:0 auto">
+    <div class="discipline discipline-featured reveal">
+      <div class="discipline-num">01</div>
+      <span class="discipline-icon">🎬</span>
+      <h3>The Language of Cinema</h3>
+      <p>Every shot is a sentence. Every sequence, a paragraph. Every film, a complete and living world. Learn to speak this language with the precision of a poet and the confidence of a master storyteller.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Screenplay</span>
+        <span class="discipline-art">Direction</span>
+        <span class="discipline-art">Visual Storytelling</span>
+        <span class="discipline-art">Mise-en-scène</span>
+        <span class="discipline-art">Narrative Theory</span>
+      </div>
+    </div>
+
+    <div class="discipline reveal reveal-delay-1">
+      <div class="discipline-num">02</div>
+      <span class="discipline-icon">🎨</span>
+      <h3>Painting with Light</h3>
+      <p>Cinematography is painting in time. Study how Vermeer's light becomes Néstor Almendros; how Caravaggio's shadow becomes Roger Deakins.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Cinematography</span>
+        <span class="discipline-art">Colour Theory</span>
+        <span class="discipline-art">Lighting Design</span>
+      </div>
+    </div>
+
+    <div class="discipline reveal reveal-delay-2">
+      <div class="discipline-num">03</div>
+      <span class="discipline-icon">🎵</span>
+      <h3>Composing Silence</h3>
+      <p>The most powerful sound in cinema is the one that isn't there. Study score, sound design, and the architecture of silence as an emotional force.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Film Score</span>
+        <span class="discipline-art">Sound Design</span>
+        <span class="discipline-art">Silence & Rhythm</span>
+      </div>
+    </div>
+
+    <div class="discipline reveal">
+      <div class="discipline-num">04</div>
+      <span class="discipline-icon">🏛️</span>
+      <h3>Architecture of Space</h3>
+      <p>Production design is the spatial poetry of cinema. Learn how space communicates psychology, power, and time across every frame.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Production Design</span>
+        <span class="discipline-art">Set Architecture</span>
+        <span class="discipline-art">Visual Symbolism</span>
+      </div>
+    </div>
+
+    <div class="discipline reveal reveal-delay-1">
+      <div class="discipline-num">05</div>
+      <span class="discipline-icon">💃</span>
+      <h3>Movement as Truth</h3>
+      <p>Camera movement is choreography. Actor's physicality is dance. Study how the body in motion within the frame becomes pure emotional truth.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Camera Movement</span>
+        <span class="discipline-art">Actor Direction</span>
+        <span class="discipline-art">Choreography</span>
+      </div>
+    </div>
+
+    <div class="discipline reveal reveal-delay-2">
+      <div class="discipline-num">06</div>
+      <span class="discipline-icon">✍️</span>
+      <h3>Literature & Myth</h3>
+      <p>Every great film is rooted in great literature. Study narrative archetypes, mythic structure, and how words become worlds on screen.</p>
+      <div class="discipline-arts">
+        <span class="discipline-art">Screenwriting</span>
+        <span class="discipline-art">Adaptation</span>
+        <span class="discipline-art">Narrative Structure</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     EXPERIENCE / STATS
+══════════════════════════════════ -->
+<section class="experience">
+  <div class="experience-inner">
+    <div class="experience-numbers reveal">
+      <div class="stat-item">
+        <span class="stat-num">7</span>
+        <span class="stat-label">Art Disciplines</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">12</span>
+        <span class="stat-label">Master Programs</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Creative Possibility</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Mission</span>
+      </div>
+    </div>
+    <div class="experience-text reveal reveal-delay-2">
+      <h2>A Place That Remembers<br>What <em>Cinema Was</em> —<br>And Dares to Say<br>What It <em>Must Become</em></h2>
+      <p>CineArt Center Academy was founded to stand against the flattening of cinematic vision. When streaming demands volume, we demand depth. When technology promises shortcuts, we insist on craft.</p>
+      <p>Here, a filmmaker learns to see before they learn to shoot. They learn to listen before they score. They learn to feel before they write.</p>
+      <div class="quote-block">
+        <p>"Cinema is a mirror by which we often see ourselves."</p>
+        <cite>Martin Scorsese</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     SOUND & SILENCE — Audio Visual
+══════════════════════════════════ -->
+<section class="sound-section">
+  <div class="sound-inner">
+
+    <div class="sound-text reveal">
+      <div class="section-eyebrow">Sound &amp; Silence</div>
+      <h2>The Most Powerful Sound<br>Is the One <em>Not There</em></h2>
+      <p>Tarkovsky called it sculpting in time. Bresson said the ear goes deeper than the eye. At Cine Art Center, we teach sound not as post-production — but as a primary compositional force, inseparable from the image.</p>
+      <p>Every film student composes their own score. Every cinematography student learns to shoot for silence. The visual and the acoustic are one.</p>
+      <div class="sound-notes">
+        <span class="sound-note">Film Score</span>
+        <span class="sound-note">Sound Design</span>
+        <span class="sound-note">Sonic Architecture</span>
+        <span class="sound-note">Silence as Language</span>
+        <span class="sound-note">AI Composition</span>
+      </div>
+    </div>
+
+    <div class="sound-art reveal reveal-delay-2">
+      <!-- Live animated waveform -->
+      <div class="waveform">
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div><div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+      </div>
+      <div class="waveform-label">The living score of cinema</div>
+
+      <!-- Musical staff SVG below waveform -->
+      <svg viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg" style="margin-top:12px;opacity:.55;">
+        <!-- staff lines -->
+        <line x1="20" y1="20" x2="500" y2="20" stroke="#C8A96E" stroke-width=".5" opacity=".4"/>
+        <line x1="20" y1="32" x2="500" y2="32" stroke="#C8A96E" stroke-width=".5" opacity=".4"/>
+        <line x1="20" y1="44" x2="500" y2="44" stroke="#C8A96E" stroke-width=".5" opacity=".4"/>
+        <line x1="20" y1="56" x2="500" y2="56" stroke="#C8A96E" stroke-width=".5" opacity=".4"/>
+        <line x1="20" y1="68" x2="500" y2="68" stroke="#C8A96E" stroke-width=".5" opacity=".4"/>
+        <!-- treble clef simplified -->
+        <path d="M30,70 Q30,44 38,36 Q46,28 42,20 Q38,12 30,16 Q24,20 26,30 Q28,42 36,50 Q28,60 28,70" fill="none" stroke="#C8A96E" stroke-width="1.2" opacity=".7" stroke-linecap="round"/>
+        <!-- notes scattered across staff -->
+        <ellipse cx="80"  cy="44" rx="6" ry="4.5" fill="#C8A96E" opacity=".7" transform="rotate(-15,80,44)"/>
+        <line x1="86"  y1="44" x2="86"  y2="20" stroke="#C8A96E" stroke-width=".9" opacity=".6"/>
+        <ellipse cx="130" cy="32" rx="6" ry="4.5" fill="#C8A96E" opacity=".5" transform="rotate(-15,130,32)"/>
+        <line x1="136" y1="32" x2="136" y2="10" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="180" cy="56" rx="6" ry="4.5" fill="none" stroke="#C8A96E" stroke-width=".9" opacity=".6" transform="rotate(-15,180,56)"/>
+        <line x1="186" y1="56" x2="186" y2="32" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="230" cy="44" rx="6" ry="4.5" fill="#C8A96E" opacity=".7" transform="rotate(-15,230,44)"/>
+        <ellipse cx="260" cy="44" rx="6" ry="4.5" fill="#C8A96E" opacity=".5" transform="rotate(-15,260,44)"/>
+        <line x1="266" y1="44" x2="266" y2="20" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="310" cy="20" rx="6" ry="4.5" fill="#C8A96E" opacity=".6" transform="rotate(-15,310,20)"/>
+        <line x1="316" y1="20" x2="316" y2="-4" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="360" cy="68" rx="6" ry="4.5" fill="none" stroke="#C8A96E" stroke-width=".9" opacity=".5" transform="rotate(-15,360,68)"/>
+        <line x1="366" y1="68" x2="366" y2="44" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="410" cy="32" rx="6" ry="4.5" fill="#C8A96E" opacity=".65" transform="rotate(-15,410,32)"/>
+        <line x1="416" y1="32" x2="416" y2="10" stroke="#C8A96E" stroke-width=".9" opacity=".5"/>
+        <ellipse cx="460" cy="56" rx="6" ry="4.5" fill="#C8A96E" opacity=".5" transform="rotate(-15,460,56)"/>
+        <!-- barlines -->
+        <line x1="160" y1="20" x2="160" y2="68" stroke="#C8A96E" stroke-width=".7" opacity=".35"/>
+        <line x1="290" y1="20" x2="290" y2="68" stroke="#C8A96E" stroke-width=".7" opacity=".35"/>
+        <line x1="390" y1="20" x2="390" y2="68" stroke="#C8A96E" stroke-width=".7" opacity=".35"/>
+        <line x1="498" y1="20" x2="498" y2="68" stroke="#C8A96E" stroke-width=".7" opacity=".35"/>
+        <line x1="494" y1="20" x2="494" y2="68" stroke="#C8A96E" stroke-width="2.5" opacity=".4"/>
+        <!-- label -->
+        <text x="260" y="86" font-family="Georgia,serif" font-size="8" fill="#7A6340" letter-spacing="5" text-anchor="middle" font-style="italic">every frame has a score</text>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     PROGRAMS
+══════════════════════════════════ -->
+<section class="programs" id="programs">
+  <div class="section-header reveal" style="max-width:1100px;margin:0 auto 80px">
+    <div>
+      <div class="section-eyebrow">Programs & Courses</div>
+      <h2 class="section-title">Shape Your <em>Cinematic Vision</em></h2>
+    </div>
+    <a href="#admissions" class="section-link">Apply Now</a>
+  </div>
+
+  <div class="programs-grid">
+    <div class="program-card reveal">
+      <div class="program-duration">12 Months · Full Time</div>
+      <h3>Master of Cinematic Arts</h3>
+      <p>A complete immersion in cinema as a convergence of all arts. From visual philosophy to final frame — the definitive cinematic education.</p>
+      <ul class="program-modules">
+        <li>Visual Theory & Film Philosophy</li>
+        <li>Advanced Cinematography & Lighting</li>
+        <li>Music & Sound for Cinema</li>
+        <li>Screenwriting & Narrative Architecture</li>
+        <li>Production Design & Visual World-Building</li>
+        <li>Directing the Human Performance</li>
+        <li>Festival Strategy & Distribution</li>
+      </ul>
+      <a href="#admissions" class="program-link">Explore Program</a>
+    </div>
+
+    <div class="program-card featured reveal reveal-delay-1">
+      <div class="program-duration">30 Days · Intensive</div>
+      <h3>AI Filmmaking Professional</h3>
+      <p>The convergence of cinematic tradition and artificial intelligence. Learn to direct the machines that are reshaping visual storytelling — without losing the soul of cinema.</p>
+      <ul class="program-modules">
+        <li>AI as Creative Collaborator, Not Replacement</li>
+        <li>Prompt Engineering for Filmmakers</li>
+        <li>Video & Image AI Production Pipeline</li>
+        <li>AI Composing & Sound Design</li>
+        <li>Post-Production & AI Color Grading</li>
+        <li>Festival-Ready AI Film Creation</li>
+        <li>Portfolio Building & Professional Launch</li>
+      </ul>
+      <a href="#admissions" class="program-link">Explore Program</a>
+    </div>
+
+    <div class="program-card reveal reveal-delay-2">
+      <div class="program-duration">3 Months · Weekend Intensive</div>
+      <h3>Cinema & the Arts Foundation</h3>
+      <p>For artists from other disciplines — painters, musicians, writers, architects — who wish to discover cinema as the synthesis of their practice.</p>
+      <ul class="program-modules">
+        <li>How Your Art Discipline Speaks on Film</li>
+        <li>Camera Fundamentals for Artists</li>
+        <li>The Grammar of Editing</li>
+        <li>Making Your First Short Film</li>
+        <li>Screening & Critique Workshop</li>
+      </ul>
+      <a href="#admissions" class="program-link">Explore Program</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     CINEMATIC QUOTE
+══════════════════════════════════ -->
+<section class="cinematic-quote">
+  <blockquote>
+    <p>"A film is — or should be — more like music than like fiction.<br>It should be a progression of moods and feelings.<br>The theme, <em>what's behind the emotion</em>, the meaning,<br>all of that comes later."</p>
+    <cite>Stanley Kubrick</cite>
+  </blockquote>
+</section>
+
+<!-- ═══════════════════════════════
+     FACULTY
+══════════════════════════════════ -->
+<section class="faculty" id="faculty">
+  <div class="section-header reveal" style="max-width:1100px;margin:0 auto 80px">
+    <div>
+      <div class="section-eyebrow">The Academy's Faculty</div>
+      <h2 class="section-title">Taught by <em>Artists,</em><br>Not Instructors</h2>
+    </div>
+    <a href="#" class="section-link">Meet All Faculty</a>
+  </div>
+
+  <div class="faculty-grid" style="max-width:1100px;margin:0 auto">
+    <div class="faculty-card reveal">
+      <div class="faculty-portrait-placeholder">A</div>
+      <div class="faculty-overlay">
+        <span class="faculty-name">Arjun Mehta</span>
+        <span class="faculty-role">Director of Photography · 28 Feature Films</span>
+      </div>
+    </div>
+    <div class="faculty-card reveal reveal-delay-1">
+      <div class="faculty-portrait-placeholder">S</div>
+      <div class="faculty-overlay">
+        <span class="faculty-name">Sunita Rao</span>
+        <span class="faculty-role">Screenwriting & Narrative · BAFTA Nominated</span>
+      </div>
+    </div>
+    <div class="faculty-card reveal reveal-delay-2">
+      <div class="faculty-portrait-placeholder">V</div>
+      <div class="faculty-overlay">
+        <span class="faculty-name">Viktor Novak</span>
+        <span class="faculty-role">Sound Design & Composition · Cannes 2019</span>
+      </div>
+    </div>
+    <div class="faculty-card reveal reveal-delay-3">
+      <div class="faculty-portrait-placeholder">M</div>
+      <div class="faculty-overlay">
+        <span class="faculty-name">Meera Krishnan</span>
+        <span class="faculty-role">Directing & Visual Philosophy · 15 International Awards</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════ -->
+<section class="testimonials">
+  <div class="section-header reveal" style="max-width:1100px;margin:0 auto 60px">
+    <div>
+      <div class="section-eyebrow">Student Voices</div>
+      <h2 class="section-title">What the <em>Academy</em> Made Possible</h2>
+    </div>
+  </div>
+  <div class="testimonials-track" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div class="testimonial reveal">
+      <p class="testimonial-text">"CineArt Center didn't teach me how to make films. It taught me how to see. Now every painting I've ever loved, every piece of music I've ever heard — all of it lives in my frames."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">P</div>
+        <div>
+          <span class="testimonial-name">Priya Sharma</span>
+          <span class="testimonial-credit">Director · Sundance Selection 2024</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial reveal reveal-delay-1">
+      <p class="testimonial-text">"I came as a musician. I left as a filmmaker who still hears every film before I see it. The Academy's integration of music and cinema changed the way I think about storytelling forever."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">K</div>
+        <div>
+          <span class="testimonial-name">Karan Desai</span>
+          <span class="testimonial-credit">Composer & Director · MAMI 2023</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     ADMISSIONS CTA
+══════════════════════════════════ -->
+<section class="admissions" id="admissions">
+  <div class="admissions-inner">
+    <div class="admissions-eyebrow">Begin Your Journey</div>
+    <h2>Your Cinema<br>Begins <em>Here</em></h2>
+    <p>Applications are now open for the 2025 intake. Limited seats ensure every student receives the intensive mentorship that a genuine cinematic education demands.</p>
+    <div class="admissions-details">
+      <div class="admissions-detail">
+        <span class="value">Jan '25</span>
+        <span class="label">Intake Opens</span>
+      </div>
+      <div class="admissions-detail">
+        <span class="value">15</span>
+        <span class="label">Seats Available</span>
+      </div>
+      <div class="admissions-detail">
+        <span class="value">30 Days</span>
+        <span class="label">Application Review</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap">
+      <a href="mailto:admissions@cineartcenter.com" class="btn-primary">Apply for Admission</a>
+      <a href="#programs" class="btn-secondary">Download Prospectus</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo">Cine<span style="margin-left:0.12em;color:var(--gold-bright)"> Art</span> <span style="color:var(--ash);font-weight:300">Center</span></span>
+        <span class="academy-line">Academy of Cinematic Arts</span>
+        <p>Where every art form converges into the seventh art — preserving the cinematic tradition for the artists who will carry it forward.</p>
+        <div style="margin-top:24px">
+          <p style="font-family:var(--font-sans);font-size:9px;letter-spacing:0.3em;color:var(--smoke)">cineartcenter.com</p>
+          <p style="font-family:var(--font-sans);font-size:9px;letter-spacing:0.3em;color:var(--smoke);margin-top:4px">admissions@cineartcenter.com</p>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#">Master of Cinematic Arts</a></li>
+          <li><a href="#">AI Filmmaking Professional</a></li>
+          <li><a href="#">Cinema & Arts Foundation</a></li>
+          <li><a href="#">Masterclasses</a></li>
+          <li><a href="#">Weekend Intensives</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Disciplines</h4>
+        <ul>
+          <li><a href="#">Cinematography</a></li>
+          <li><a href="#">Directing</a></li>
+          <li><a href="#">Screenwriting</a></li>
+          <li><a href="#">Sound & Music</a></li>
+          <li><a href="#">Production Design</a></li>
+          <li><a href="#">Editing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="#">Our Manifesto</a></li>
+          <li><a href="#">Faculty</a></li>
+          <li><a href="#">Student Films</a></li>
+          <li><a href="#">Film Library</a></li>
+          <li><a href="#">Apply Now</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 CineArt Center Academy · cineartcenter.com · All Rights Reserved</p>
+      <ul class="footer-bottom-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+        <li><a href="#">Sitemap</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+});
+function animateRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top = ringY + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Nav scroll
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
